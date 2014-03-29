@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+S="$(dirname "$0")"
+
+"$S/uninstall-fah5.sh"
+"$S/uninstall-fah6.sh"
+"$S/uninstall-fah7.sh"
+"$S/uninstall-cleanup.sh"
