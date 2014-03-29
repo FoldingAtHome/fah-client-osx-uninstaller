@@ -1,15 +1,13 @@
-# Configure system boilerplate
-import os, sys
-sys.path.append(os.environ.get('CONFIG_SCRIPTS_HOME',
-                               '../../../control/config-scripts'))
-import config
-
-#version = open('version/version.txt', 'r').read().strip()
-version = '0.1.0'
-
 # Setup
-# these vars should probably all be in distpkg.add_vars()
-vars = [
+import os
+import sys
+env = Environment()
+try:
+    env.Tool('config', toolpath = [os.environ.get('CBANG_HOME')])
+except Exception, e:
+    raise Exception, 'CBANG_HOME not set?\n' + str(e)
+
+env.CBAddVariables(
     # desire everything built flat True, target 10.5
     # to get old build, use flat False, target 10.6 in scons-options.py
     BoolVariable('distpkg_flat', 'Build a flat OSX installer pkg', True),
@@ -25,18 +23,18 @@ vars = [
     ('sign_keychain', 'Keychain that has signatures'),
     ('sign_id_installer', 'Installer signature name'),
     ('sign_id_app', 'Application/Tool signature name'),
-    ('sign_prefix', 'codesign identifier prefix'),
-    ]
-env = config.make_env(['packager'], vars)
+    ('sign_prefix', 'codesign identifier prefix'))
 
-# Configure
-conf = Configure(env)
+env.CBLoadTools('packager')
+conf = env.CBConfigure()
 
-# Packaging
-config.configure('packager', conf)
+# Version
+version = '0.1.0'
+env.Replace(PACKAGE_VERSION = version)
+
 
 # this should be in packager.configure
-env['package_ignores'] += ['.DS_Store']
+env.Append(PACKAGE_IGNORES = ['.DS_Store'])
 
 sys.path.append('./src')
 import flatdistpkg, flatdistpackager
@@ -72,7 +70,6 @@ parameters = {
     'distpkg_resources' : [['Resources', '.']],
     'distpkg_welcome' : 'Welcome.rtf',
     'distpkg_conclusion' : 'Conclusion.rtf',
-    #'distpkg_license' : 'License.rtf',
     'distpkg_background' : 'fah-light.png',
     'distpkg_target' : '10.5',
     'distpkg_arch' : 'i386 ppc',
