@@ -397,6 +397,13 @@ def sign_application(target, env):
     keychain = env.get('sign_keychain')
     sign = env.get('sign_id_app')
     cmd = ['codesign', '-f']
+    try:
+      ver = tuple([int(x) for x in platform.mac_ver()[0].split('.')])
+      # all bundles in an app must also be signed on 10.7+
+      # easy way to do this is just to codesign --deep
+      # only ok if there are no sandbox entitlements for this app
+      if ver >= (10,7): cmd += ['--deep']
+    except: pass
     if keychain:
         cmd += ['--keychain', keychain]
     if sign:
