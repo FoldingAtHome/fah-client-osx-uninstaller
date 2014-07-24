@@ -8,12 +8,6 @@ except Exception, e:
     raise Exception, 'CBANG_HOME not set?\n' + str(e)
 
 env.CBAddVariables(
-    # desire everything built flat True, target 10.5
-    # to get old build, use flat False, target 10.6 in scons-options.py
-    BoolVariable('distpkg_flat', 'Build a flat OSX installer pkg', True),
-    ('distpkg_target', 'Min OSX version required by installer pkg', '10.5'),
-    # non-root pkg installs are very buggy, so this should stay True
-    ('distpkg_root_volume_only', 'Require root auth to install', True),
     # put sign_* in scons-options.py
     # if not sign_keychain, the default (login) keychain will be used
     # if not sign_id_installer, productsign will be skipped
