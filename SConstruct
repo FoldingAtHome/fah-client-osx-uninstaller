@@ -7,18 +7,6 @@ try:
 except Exception, e:
     raise Exception, 'CBANG_HOME not set?\n' + str(e)
 
-env.CBAddVariables(
-    # put sign_* in scons-options.py
-    # if not sign_keychain, the default (login) keychain will be used
-    # if not sign_id_installer, productsign will be skipped
-    # sign_id_app is required for sign_apps and sign_tools
-    # sign_prefix is required for sign_tools
-    # global; cannot currently be overridden per-component
-    ('sign_keychain', 'Keychain that has signatures'),
-    ('sign_id_installer', 'Installer signature name'),
-    ('sign_id_app', 'Application/Tool signature name'),
-    ('sign_prefix', 'codesign identifier prefix'))
-
 env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
