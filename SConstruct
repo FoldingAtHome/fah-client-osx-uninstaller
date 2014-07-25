@@ -18,11 +18,6 @@ env.Replace(PACKAGE_VERSION = version)
 # this should be in packager.configure
 env.Append(PACKAGE_IGNORES = ['.DS_Store'])
 
-sys.path.append('./src')
-import flatdistpkg, flatdistpackager
-flatdistpkg.configure(conf)
-flatdistpackager.configure(conf)
-
 # Flat Dist Components
 distpkg_components = [
     {'name': 'Uninstaller',
@@ -60,7 +55,7 @@ parameters = {
     'distpkg_components' : distpkg_components,
     'distpkg_customize' : 'never', # only one component
     }
-pkg = env.FlatDistPackager(**parameters)
+pkg = env.Packager(**parameters)
 
 AlwaysBuild(pkg)
 env.Alias('package', pkg)
@@ -76,6 +71,4 @@ if 'distclean' in COMMAND_LINE_TARGETS:
         Glob(name + '*.pkg'),
         Glob(name + '*.mpkg'),
         Glob(name + '*.zip'),
-        Glob('*.pyc'),
-        Glob('src/*.pyc'),
         ])
