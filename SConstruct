@@ -7,24 +7,6 @@ try:
 except Exception, e:
     raise Exception, 'CBANG_HOME not set?\n' + str(e)
 
-env.CBAddVariables(
-    # desire everything built flat True, target 10.5
-    # to get old build, use flat False, target 10.6 in scons-options.py
-    BoolVariable('distpkg_flat', 'Build a flat OSX installer pkg', True),
-    ('distpkg_target', 'Min OSX version required by installer pkg', '10.5'),
-    # non-root pkg installs are very buggy, so this should stay True
-    ('distpkg_root_volume_only', 'Require root auth to install', True),
-    # put sign_* in scons-options.py
-    # if not sign_keychain, the default (login) keychain will be used
-    # if not sign_id_installer, productsign will be skipped
-    # sign_id_app is required for sign_apps and sign_tools
-    # sign_prefix is required for sign_tools
-    # global; cannot currently be overridden per-component
-    ('sign_keychain', 'Keychain that has signatures'),
-    ('sign_id_installer', 'Installer signature name'),
-    ('sign_id_app', 'Application/Tool signature name'),
-    ('sign_prefix', 'codesign identifier prefix'))
-
 env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
@@ -35,11 +17,6 @@ env.Replace(PACKAGE_VERSION = version)
 
 # this should be in packager.configure
 env.Append(PACKAGE_IGNORES = ['.DS_Store'])
-
-sys.path.append('./src')
-import flatdistpkg, flatdistpackager
-flatdistpkg.configure(conf)
-flatdistpackager.configure(conf)
 
 # Flat Dist Components
 distpkg_components = [
@@ -78,7 +55,7 @@ parameters = {
     'distpkg_components' : distpkg_components,
     'distpkg_customize' : 'never', # only one component
     }
-pkg = env.FlatDistPackager(**parameters)
+pkg = env.Packager(**parameters)
 
 AlwaysBuild(pkg)
 env.Alias('package', pkg)
@@ -94,6 +71,4 @@ if 'distclean' in COMMAND_LINE_TARGETS:
         Glob(name + '*.pkg'),
         Glob(name + '*.mpkg'),
         Glob(name + '*.zip'),
-        Glob('*.pyc'),
-        Glob('src/*.pyc'),
         ])
