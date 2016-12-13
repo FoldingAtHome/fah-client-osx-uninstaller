@@ -11,7 +11,7 @@ env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
 # Version
-version = '0.1.0'
+version = '0.1.1'
 env.Replace(PACKAGE_VERSION = version)
 
 

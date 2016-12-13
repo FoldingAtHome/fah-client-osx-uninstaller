@@ -1,0 +1,11 @@
+.sconsign.dblite
+.sconf_temp
+/config.log
+
+/build
+
+/*.pkg
+/*pkg.zip
+/package*.txt
+
+.DS_Store
