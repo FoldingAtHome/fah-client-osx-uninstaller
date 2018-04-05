@@ -3,8 +3,6 @@
 # uninstall fah 7
 
 # terminate FAHControl and FAHViewer if running; also terminate by old exe names
-# this should also stop any fahclient running under fahcontrol
-# NO, will not stop client, as SIGTERM is not caught for a normal exit
 killall -TERM FAHControl FAHViewer fahcontrol FAHClientGUI >/dev/null 2>&1
 
 # stop folding service; old plist name
@@ -26,14 +24,6 @@ else
     launchctl remove edu.stanford.folding.fahclient >/dev/null 2>&1
 fi
 
-# remove client helper agent plist
-F="/Library/LaunchAgents/edu.stanford.folding.fahclienthelper.plist"
-if [ -f "$F" ]; then
-    # don't bother to unload from all users
-    # harmless to leave running till reboot
-    rm -f "$F"
-fi
-
 # future: stop any fahclient running as root or per-user LaunchAgent, or
 # per-user LoginItem to fold GPU units, or per-user via SpawnApps
 
@@ -49,9 +39,8 @@ fi
 # remove scripts, symlinks, executables
 rm -f /usr/bin/FAHControl >/dev/null 2>&1
 rm -f /usr/bin/FAHViewer >/dev/null 2>&1
-rm -f /usr/bin/FAHClient >/dev/null 2>&1
-rm -f /usr/bin/FAHCoreWrapper >/dev/null 2>&1
-rm -f /usr/bin/FAHClientHelper >/dev/null 2>&1
+rm -f /usr/bin/FAH{Client,CoreWrapper} >/dev/null 2>&1
+rm -f /usr/local/bin/FAH{Client,CoreWrapper} >/dev/null 2>&1
 
 # remove any fahclient extras
 # note, in the future, this might include fahclient working directory
@@ -74,24 +63,6 @@ rm -rf /Applications/Folding\@home/FAHControl.app >/dev/null 2>&1
 rm -rf /Applications/Folding\@home/FAHViewer.app >/dev/null 2>&1
 rm -f /Applications/Folding\@home/FAHClient.url >/dev/null 2>&1
 rm -f /Applications/Folding\@home/Web\ Control.url >/dev/null 2>&1
-
-# remove fahcontrol helper, if it exists
-F="/Library/LaunchDaemons/edu.stanford.folding.fahcontrol.helper.plist"
-if [ -f "$F" ]; then
-    launchctl unload -w "$F"
-    rm -f "$F"
-    rm -f \
-        /Library/PrivilegedHelperTools/edu.stanford.folding.fahcontrol.helper
-    rm -f /var/run/edu.stanford.folding.fahcontrol.helper.socket
-fi
-# unpatched BetterhAuthenticationSampleLib doesn't append .helper to bundleid
-F="/Library/LaunchDaemons/edu.stanford.folding.fahcontrol.plist"
-if [ -f "$F" ]; then
-    launchctl unload -w "$F"
-    rm -f "$F"
-    rm -f /Library/PrivilegedHelperTools/edu.stanford.folding.fahcontrol
-    rm -f /var/run/edu.stanford.folding.fahcontrol.socket
-fi
 
 # remove osx 10.6+ package receipts
 OS_MAJOR="`uname -r | cut -f1 -d.`"
