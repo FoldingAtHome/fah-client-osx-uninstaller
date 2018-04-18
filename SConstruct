@@ -22,10 +22,10 @@ env.Append(PACKAGE_IGNORES = ['.DS_Store'])
 distpkg_components = [
     {'name': 'Uninstaller',
         'home': '.',
-        'pkg_id': 'foldingathome.org.uninstaller.pkg',
+        'pkg_id': 'org.foldingathome.uninstaller.pkg',
         'must_close_apps': [
-            'foldingathome.org.fahviewer',
-            'foldingathome.org.fahcontrol',
+            'org.foldingathome.fahviewer',
+            'org.foldingathome.fahcontrol',
             ],
         'pkg_nopayload': True,
         'pkg_scripts': 'Scripts',
