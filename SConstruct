@@ -11,7 +11,7 @@ env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
 # Version
-version = '0.1.1'
+version = '0.1.2'
 env.Replace(PACKAGE_VERSION = version)
 
 
@@ -26,6 +26,8 @@ distpkg_components = [
         'must_close_apps': [
             'org.foldingathome.fahviewer',
             'org.foldingathome.fahcontrol',
+            'edu.stanford.folding.fahviewer',
+            'edu.stanford.folding.fahcontrol',
             ],
         'pkg_nopayload': True,
         'pkg_scripts': 'Scripts',

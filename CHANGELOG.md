@@ -1,3 +1,6 @@
+## v0.1.2
+- Uninstall both edu.stanford.folding and org.foldingathome
+
 ## v0.1.1
 - Also uninstall from /usr/local/bin
 

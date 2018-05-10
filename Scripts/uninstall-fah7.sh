@@ -24,6 +24,16 @@ else
     launchctl remove edu.stanford.folding.fahclient >/dev/null 2>&1
 fi
 
+# stop folding service
+F="/Library/LaunchDaemons/org.foldingathome.fahclient.plist"
+if [ -f "$F" ]; then
+    launchctl unload -w "$F"
+    rm -f "$F"
+else
+    # try to unload job, even if user manually deleted plist
+    launchctl remove org.foldingathome.fahclient >/dev/null 2>&1
+fi
+
 # future: stop any fahclient running as root or per-user LaunchAgent, or
 # per-user LoginItem to fold GPU units, or per-user via SpawnApps
 
@@ -64,6 +74,9 @@ rm -rf /Applications/Folding\@home/FAHViewer.app >/dev/null 2>&1
 rm -f /Applications/Folding\@home/FAHClient.url >/dev/null 2>&1
 rm -f /Applications/Folding\@home/Web\ Control.url >/dev/null 2>&1
 
+rm -rf /Applications/Folding\@home/FAHControl/FAHControl.app >/dev/null 2>&1
+rm -rf /Applications/Folding\@home/FAHViewer/FAHViewer.app >/dev/null 2>&1
+
 # remove osx 10.6+ package receipts
 OS_MAJOR="`uname -r | cut -f1 -d.`"
 if [ "$OS_MAJOR" -ge 10 ]; then
@@ -71,6 +84,9 @@ if [ "$OS_MAJOR" -ge 10 ]; then
     pkgutil --force --forget edu.stanford.folding.fahclient.pkg
     pkgutil --force --forget edu.stanford.folding.fahcontrol.pkg
     pkgutil --force --forget edu.stanford.folding.fahviewer.pkg
+    pkgutil --force --forget org.foldingathome.fahclient.pkg
+    pkgutil --force --forget org.foldingathome.fahcontrol.pkg
+    pkgutil --force --forget org.foldingathome.fahviewer.pkg
 fi
 
 # remove pre-10.6 package receipts
