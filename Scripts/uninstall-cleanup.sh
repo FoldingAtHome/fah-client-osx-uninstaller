@@ -32,10 +32,11 @@ OS_MAJOR="`/usr/bin/uname -r | cut -f1 -d.`"
 if [ "$OS_MAJOR" -ge 10 ]; then
    # We have Snow Leopard or higher.
    PACKAGES=`pkgutil --pkgs='edu\.stanford\.folding\.uninstall.*'`
+   PACKAGES2=`pkgutil --pkgs='org\.foldingathome\.uninstall.*'`
    OLD_IFS="$IFS"
    IFS=$'\n'
    # Discard the existing package receipt data including any old pkg ID(s).
-   for pkg in $PACKAGES ; do
+   for pkg in $PACKAGES $PACKAGES2 ; do
       pkgutil --force --forget $pkg
    done
    IFS="$OLD_IFS"
