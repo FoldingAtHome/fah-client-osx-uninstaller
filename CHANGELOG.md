@@ -1,3 +1,6 @@
+## v0.1.3
+- Replace background image with a translucent one
+
 ## v0.1.2
 - Uninstall both edu.stanford.folding and org.foldingathome
 
