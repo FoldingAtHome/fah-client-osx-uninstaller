@@ -11,7 +11,7 @@ env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
 # Version
-version = '0.1.2'
+version = '0.1.3'
 env.Replace(PACKAGE_VERSION = version)
 
 
@@ -49,7 +49,7 @@ parameters = {
     'distpkg_resources' : [['Resources', '.']],
     'distpkg_welcome' : 'Welcome.rtf',
     'distpkg_conclusion' : 'Conclusion.rtf',
-    'distpkg_background' : 'fah-light.png',
+    'distpkg_background' : 'fah-opacity-50.png',
     'distpkg_target' : '10.5',
     'distpkg_arch' : 'i386 ppc',
     'package_arch' : 'all',
