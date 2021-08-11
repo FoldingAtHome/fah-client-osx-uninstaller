@@ -1,3 +1,6 @@
+## v0.1.4
+- Minor updates
+
 ## v0.1.3
 - Replace background image with a translucent one
 

@@ -52,11 +52,6 @@ rm -f /usr/bin/FAHViewer >/dev/null 2>&1
 rm -f /usr/bin/FAH{Client,CoreWrapper} >/dev/null 2>&1
 rm -f /usr/local/bin/FAH{Client,CoreWrapper} >/dev/null 2>&1
 
-# remove any fahclient extras
-# note, in the future, this might include fahclient working directory
-# so we really should check for and not delete any such files
-rm -rf /usr/lib/fahclient/ >/dev/null 2>&1
-
 # remove apps, by old and new names
 # future: also find and delete any moved copies of the apps
 rm -rf /Applications/FAHClientGUI.app >/dev/null 2>&1
