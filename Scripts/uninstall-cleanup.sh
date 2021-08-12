@@ -25,6 +25,7 @@ if [ $I -lt 1 ]; then sleep 1; fi
 # edu.stanford.folding.uninstaller.pkg
 # edu.stanford.folding.uninstall.fah{5,6,7}.pkg
 # edu.stanford.folding.uninstall.cleanup.pkg
+# org.foldingathome.uninstall*
 
 # derived from vmware uninstaller script
 # remove osx 10.6+ package receipts
@@ -53,9 +54,14 @@ rm -rf /Library/Receipts/edu.stanford.folding.uninstall* >/dev/null 2>&1
 # finally, remove uninstaller pkg, from which we may have been run
 # Installer.app may move or delete this early on its own
 rm -rf "/Applications/Folding@home/Uninstall Folding@home.pkg" >/dev/null 2>&1
+0
+# remove all .DS_Store
+DIR="/Applications/Folding@home"
+[ -d "$DIR" ] && find "$DIR" -type f -name .DS_Store -delete
 
-# remove folder if empty
-rm -f /Applications/Folding\@home/.DS_Store >/dev/null 2>&1
-rmdir /Applications/Folding\@home >/dev/null 2>&1
+# remove directories if empty
+rmdir "$DIR/FAHControl" >/dev/null 2>&1
+rmdir "$DIR/FAHViewer" >/dev/null 2>&1
+rmdir "$DIR" >/dev/null 2>&1
 
 exit 0

@@ -4,14 +4,14 @@ import sys
 env = Environment(ENV = os.environ)
 try:
     env.Tool('config', toolpath = [os.environ.get('CBANG_HOME')])
-except Exception, e:
-    raise Exception, 'CBANG_HOME not set?\n' + str(e)
+except Exception as e:
+    raise Exception('CBANG_HOME not set?\n' + str(e))
 
 env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
 # Version
-version = '0.1.3'
+version = '0.1.4'
 env.Replace(PACKAGE_VERSION = version)
 
 
@@ -46,12 +46,12 @@ parameters = {
     'description' : 'Folding@home uninstaller package',
     'short_description' : 'Folding@home uninstaller package',
     'pkg_type' : 'dist',
-    'distpkg_resources' : [['Resources', '.']],
+    'distpkg_resources' : [['Resources', '.'], ['LICENSE', '.']],
     'distpkg_welcome' : 'Welcome.rtf',
     'distpkg_conclusion' : 'Conclusion.rtf',
     'distpkg_background' : 'fah-opacity-50.png',
     'distpkg_target' : '10.5',
-    'distpkg_arch' : 'i386 ppc',
+    'distpkg_arch' : 'i386 ppc x86_64 arm64',
     'package_arch' : 'all',
     'distpkg_flat' : True,
     'distpkg_components' : distpkg_components,
