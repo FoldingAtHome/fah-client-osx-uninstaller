@@ -1,6 +1,10 @@
 # Setup
 import os
 import sys
+
+if sys.platform != 'darwin':
+    exit(0)
+
 env = Environment(ENV = os.environ)
 try:
     env.Tool('config', toolpath = [os.environ.get('CBANG_HOME')])
