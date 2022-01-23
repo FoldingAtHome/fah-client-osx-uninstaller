@@ -36,11 +36,7 @@ if [ -d "$F" ]; then
     # remove screen saver
     rm -rf "$F"
     # remove osx 10.6+ package receipts
-    OS_MAJOR="`/usr/bin/uname -r | cut -f1 -d.`"
-    if [ "$OS_MAJOR" -ge 10 ]; then
-        # We have Snow Leopard or higher.
-        pkgutil --force --forget edu.stanford.folding
-    fi
+    pkgutil --force --forget edu.stanford.folding
 fi
 
 # remove pre-10.6 package receipts

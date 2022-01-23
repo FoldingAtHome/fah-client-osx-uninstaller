@@ -31,7 +31,7 @@ if [ $I -lt 1 ]; then sleep 1; fi
 # remove osx 10.6+ package receipts
 OS_MAJOR="`/usr/bin/uname -r | cut -f1 -d.`"
 if [ "$OS_MAJOR" -ge 10 ]; then
-   # We have Snow Leopard or higher.
+   # Assume Snow Leopard or higher.
    PACKAGES=`pkgutil --pkgs='edu\.stanford\.folding\.uninstall.*'`
    PACKAGES2=`pkgutil --pkgs='org\.foldingathome\.uninstall.*'`
    OLD_IFS="$IFS"
