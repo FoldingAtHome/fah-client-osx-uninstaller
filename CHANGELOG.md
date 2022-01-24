@@ -1,3 +1,7 @@
+## v0.1.5
+- Add uninstall fah 8
+- Minor cleanup
+
 ## v0.1.4
 - Minor updates
 

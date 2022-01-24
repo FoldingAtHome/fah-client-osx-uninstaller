@@ -15,7 +15,7 @@ env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
 # Version
-version = '0.1.4'
+version = '0.1.5'
 env.Replace(PACKAGE_VERSION = version)
 
 
@@ -57,7 +57,6 @@ parameters = {
     'distpkg_target' : '10.5',
     'distpkg_arch' : 'i386 ppc x86_64 arm64',
     'package_arch' : 'all',
-    'distpkg_flat' : True,
     'distpkg_components' : distpkg_components,
     'distpkg_customize' : 'never', # only one component
     }

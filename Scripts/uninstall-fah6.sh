@@ -41,13 +41,8 @@ if [ -x "/Applications/Folding@home.app/fah6" ]; then
 fi
 
 # remove osx 10.6+ package receipts
-OS_MAJOR="`uname -r | cut -f1 -d.`"
-if [ "$OS_MAJOR" -ge 10 ]; then
-    # We have Snow Leopard or higher.
-    pkgutil --force --forget \
-        edu.stanford.folding.foldinghome6241.root.pkg
-    pkgutil --force --forget edu.stanford.folding
-fi
+pkgutil --force --forget edu.stanford.folding.foldinghome6241.root.pkg
+pkgutil --force --forget edu.stanford.folding
 
 # remove pre-10.6 package receipts
 # old fah6 pref pane installers made root.pkg

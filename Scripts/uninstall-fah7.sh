@@ -5,7 +5,7 @@
 # terminate FAHControl and FAHViewer if running; also terminate by old exe names
 killall -TERM FAHControl FAHViewer fahcontrol FAHClientGUI >/dev/null 2>&1
 
-# stop folding service; old plist name
+# stop folding service; old plist names
 F="/Library/LaunchDaemons/FAHClient.plist"
 if [ -f "$F" ]; then
     launchctl unload -w "$F"
@@ -14,7 +14,6 @@ if [ -f "$F" ]; then
     rm -f "$F"
 fi
 
-# stop folding service
 F="/Library/LaunchDaemons/edu.stanford.folding.fahclient.plist"
 if [ -f "$F" ]; then
     launchctl unload -w "$F"
@@ -73,16 +72,12 @@ rm -rf /Applications/Folding\@home/FAHControl/FAHControl.app >/dev/null 2>&1
 rm -rf /Applications/Folding\@home/FAHViewer/FAHViewer.app >/dev/null 2>&1
 
 # remove osx 10.6+ package receipts
-OS_MAJOR="`uname -r | cut -f1 -d.`"
-if [ "$OS_MAJOR" -ge 10 ]; then
-    # We have Snow Leopard or higher.
-    pkgutil --force --forget edu.stanford.folding.fahclient.pkg
-    pkgutil --force --forget edu.stanford.folding.fahcontrol.pkg
-    pkgutil --force --forget edu.stanford.folding.fahviewer.pkg
-    pkgutil --force --forget org.foldingathome.fahclient.pkg
-    pkgutil --force --forget org.foldingathome.fahcontrol.pkg
-    pkgutil --force --forget org.foldingathome.fahviewer.pkg
-fi
+pkgutil --force --forget edu.stanford.folding.fahclient.pkg
+pkgutil --force --forget edu.stanford.folding.fahcontrol.pkg
+pkgutil --force --forget edu.stanford.folding.fahviewer.pkg
+pkgutil --force --forget org.foldingathome.fahclient.pkg
+pkgutil --force --forget org.foldingathome.fahcontrol.pkg
+pkgutil --force --forget org.foldingathome.fahviewer.pkg
 
 # remove pre-10.6 package receipts
 rm -rf /Library/Receipts/edu.stanford.folding.fahclient.pkg \
