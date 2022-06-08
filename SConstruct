@@ -18,10 +18,6 @@ conf = env.CBConfigure()
 version = '0.1.5'
 env.Replace(PACKAGE_VERSION = version)
 
-
-# this should be in packager.configure
-env.Append(PACKAGE_IGNORES = ['.DS_Store'])
-
 # Flat Dist Components
 distpkg_components = [
     {'name': 'Uninstaller',
@@ -74,6 +70,5 @@ if 'distclean' in COMMAND_LINE_TARGETS:
         '.sconsign.dblite', '.sconf_temp', 'config.log',
         'build', 'package.txt', 'package-description.txt',
         Glob(name + '*.pkg'),
-        Glob(name + '*.mpkg'),
         Glob(name + '*.zip'),
         ])
