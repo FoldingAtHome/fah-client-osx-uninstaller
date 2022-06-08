@@ -24,6 +24,7 @@ fi
 # remove scripts, symlinks, executables, extras
 rm -f /usr/local/bin/fah-client >/dev/null 2>&1
 rm -f /Applications/Folding\@home/fahclient.url >/dev/null 2>&1
+rm -f /Applications/Folding\@home/uninstall.url >/dev/null 2>&1
 
 # remove osx 10.6+ package receipts
 pkgutil --force --forget org.foldingathome.fahclient.pkg
