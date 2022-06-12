@@ -7,7 +7,7 @@ if sys.platform != 'darwin':
 
 env = Environment(ENV = os.environ)
 try:
-    env.Tool('config', toolpath = [os.environ.get('CBANG_HOME')])
+    env.Tool('config', toolpath = [os.environ.get('CBANG_HOME'), './cbang'])
 except Exception as e:
     raise Exception('CBANG_HOME not set?\n' + str(e))
 
@@ -17,6 +17,8 @@ conf = env.CBConfigure()
 # Version
 version = '0.1.5'
 env.Replace(PACKAGE_VERSION = version)
+
+conf.Finish()
 
 # Flat Dist Components
 distpkg_components = [
@@ -46,7 +48,7 @@ parameters = {
     'description' : 'Folding@home uninstaller package',
     'short_description' : 'Folding@home uninstaller package',
     'pkg_type' : 'dist',
-    'distpkg_resources' : [['Resources', '.'], ['LICENSE', '.']],
+    'distpkg_resources' : [['Resources', '.']],
     'distpkg_welcome' : 'Welcome.rtf',
     'distpkg_conclusion' : 'Conclusion.rtf',
     'distpkg_background' : 'fah-opacity-50.png',
@@ -56,19 +58,17 @@ parameters = {
     'distpkg_components' : distpkg_components,
     'distpkg_customize' : 'never', # only one component
     }
-pkg = env.Packager(**parameters)
 
-AlwaysBuild(pkg)
-env.Alias('package', pkg)
+if 'package' in COMMAND_LINE_TARGETS:
+    pkg = env.Packager(**parameters)
+    AlwaysBuild(pkg)
+    env.Alias('package', pkg)
+    Clean(pkg, ['build', 'config.log'])
+    NoClean(pkg, Glob(name + '*.pkg') , 'package.txt')
 
-# Clean
-Clean(pkg, ['build', 'config.log'])
-# ensure *.zip not cleaned unless distclean
-NoClean(pkg, Glob('*.zip'))
 if 'distclean' in COMMAND_LINE_TARGETS:
     Clean('distclean', [
         '.sconsign.dblite', '.sconf_temp', 'config.log',
         'build', 'package.txt', 'package-description.txt',
         Glob(name + '*.pkg'),
-        Glob(name + '*.zip'),
         ])
