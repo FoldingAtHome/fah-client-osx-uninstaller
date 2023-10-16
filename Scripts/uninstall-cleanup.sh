@@ -3,8 +3,7 @@
 # uninstaller cleanup
 
 # We must do a delayed cleanup, so we can remove the uninstaller receipts,
-# which are written AFTER all postflights.
-# Metapkg postflight is actually run before the component postflights.
+# which are written AFTER all postinstalls.
 if [ "$1" != "--delayed-cleanup" ]; then
   "$0" --delayed-cleanup "$@" &
   exit 0
@@ -36,32 +35,24 @@ if [ "$OS_MAJOR" -ge 10 ]; then
    PACKAGES2=`pkgutil --pkgs='org\.foldingathome\.uninstall.*'`
    OLD_IFS="$IFS"
    IFS=$'\n'
-   # Discard the existing package receipt data including any old pkg ID(s).
    for pkg in $PACKAGES $PACKAGES2 ; do
-      pkgutil --force --forget $pkg
+      pkgutil --force --forget "$pkg"
    done
    IFS="$OLD_IFS"
-   # We don't use pkgutil --unlink to remove the installed package contents
-   # because it does not remove the directories. We fall back to removing
-   # the files manually below. If pkgutil is ever updated to remove the
-   # directories, we should use it instead, and remove any install/runtime
-   # created files here.
 fi
 
 # remove pre-10.6 package receipts
-rm -rf /Library/Receipts/edu.stanford.folding.uninstall* >/dev/null 2>&1
+rm -rf /Library/Receipts/edu.stanford.folding.uninstall* 2>/dev/null
 
 # finally, remove uninstaller pkg, from which we may have been run
 # Installer.app may move or delete this early on its own
-rm -rf "/Applications/Folding@home/Uninstall Folding@home.pkg" >/dev/null 2>&1
-0
+rm -rf "/Applications/Folding@home/Uninstall Folding@home.pkg" 2>/dev/null
+
 # remove all .DS_Store
 DIR="/Applications/Folding@home"
 [ -d "$DIR" ] && find "$DIR" -type f -name .DS_Store -delete
 
 # remove directories if empty
-rmdir "$DIR/FAHControl" >/dev/null 2>&1
-rmdir "$DIR/FAHViewer" >/dev/null 2>&1
-rmdir "$DIR" >/dev/null 2>&1
+rmdir "$DIR/FAHControl" "$DIR/FAHViewer" "$DIR" 2>/dev/null
 
 exit 0

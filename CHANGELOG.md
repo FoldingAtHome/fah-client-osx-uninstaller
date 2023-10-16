@@ -1,3 +1,6 @@
+## v0.1.6
+- Removes GPUs.txt, gpus.json, cores, fah-web-control
+
 ## v0.1.5
 - Add uninstall fah 8
 - Minor cleanup

@@ -6,7 +6,7 @@
 # Assistant or disk cloning
 
 # stop folding app
-killall -TERM "Folding@home" >/dev/null 2>&1
+killall -TERM "Folding@home" 2>/dev/null
 
 # do not stop nor delete CLI client fah5, as that is assumed to be under manual
 # or third-party control
@@ -16,12 +16,10 @@ killall -TERM "Folding@home" >/dev/null 2>&1
 # and it is unlikely someone would activate screen saver while uninstaller is
 # running
 
-# remove fah5 app
-# note that this could have been placed anywhere by user; we'll assume they put
-# it in /Apps in the future, we should find and delete all instances on boot
-# volume don't delete fake fah6 app
+# remove fah5 app; assume it is in /Applications
+# don't delete fake fah6 app
 if [ ! -f "/Applications/Folding@home.app/fah6" ]; then
-    rm -rf "/Applications/Folding@home.app" >/dev/null 2>&1
+    rm -rf "/Applications/Folding@home.app" 2>/dev/null
 fi
 
 # remove screen saver and package receipts
@@ -30,7 +28,6 @@ fi
 # so only remove 10.6 pkg receipt if saver exists in standard location
 # note that it was allowed to install the saver under a user's home; we'll
 # ignore that
-# in the future, we should find and delete all instances on boot volume
 F="/Library/Screen Savers/Folding@home.saver"
 if [ -d "$F" ]; then
     # remove screen saver
@@ -40,6 +37,6 @@ if [ -d "$F" ]; then
 fi
 
 # remove pre-10.6 package receipts
-rm -rf /Library/Receipts/OSX-SS-5.02.pkg >/dev/null 2>&1
+rm -rf /Library/Receipts/OSX-SS-5.02.pkg 2>/dev/null
 
 exit 0
