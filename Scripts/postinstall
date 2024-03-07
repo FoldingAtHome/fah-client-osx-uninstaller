@@ -7,3 +7,5 @@ S="$(dirname "$0")"
 "$S/uninstall-fah7.sh"
 "$S/uninstall-fah8.sh"
 "$S/uninstall-cleanup.sh"
+
+exit 0

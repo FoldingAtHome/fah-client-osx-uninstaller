@@ -1,4 +1,3 @@
-# Setup
 import os
 import sys
 
@@ -14,14 +13,12 @@ except Exception as e:
 env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
-# Version
-version = '0.1.5'
+version = '0.1.6'
 env.Replace(PACKAGE_VERSION = version)
 
 conf.Finish()
 
-# Flat Dist Components
-distpkg_components = [
+pkg_components = [
     {'name': 'Uninstaller',
         'home': '.',
         'pkg_id': 'org.foldingathome.uninstaller.pkg',
@@ -36,8 +33,6 @@ distpkg_components = [
         },
     ]
 
-# Package
-# Note: a flat dist pkg does not need a pkg_id
 name = 'fah-uninstaller'
 parameters = {
     'name' : name,
@@ -48,27 +43,26 @@ parameters = {
     'description' : 'Folding@home uninstaller package',
     'short_description' : 'Folding@home uninstaller package',
     'pkg_type' : 'dist',
-    'distpkg_resources' : [['Resources', '.']],
-    'distpkg_welcome' : 'Welcome.rtf',
-    'distpkg_conclusion' : 'Conclusion.rtf',
-    'distpkg_background' : 'fah-opacity-50.png',
-    'distpkg_target' : '10.5',
-    'distpkg_arch' : 'i386 ppc x86_64 arm64',
+    'pkg_resources' : [['Resources', '.']],
+    'pkg_welcome' : 'Welcome.rtf',
+    'pkg_conclusion' : 'Conclusion.rtf',
+    'pkg_background' : 'fah-opacity-50.png',
+    'pkg_target' : '10.5',
+    'pkg_arch' : 'i386 ppc x86_64 arm64',
     'package_arch' : 'all',
-    'distpkg_components' : distpkg_components,
-    'distpkg_customize' : 'never', # only one component
+    'pkg_components' : pkg_components,
+    'pkg_customize' : 'never', # only one component
     }
 
 if 'package' in COMMAND_LINE_TARGETS:
     pkg = env.Packager(**parameters)
     AlwaysBuild(pkg)
     env.Alias('package', pkg)
-    Clean(pkg, ['build', 'config.log'])
-    NoClean(pkg, Glob(name + '*.pkg') , 'package.txt')
+    Clean(pkg, ['build', 'config.log', 'package.txt'])
 
 if 'distclean' in COMMAND_LINE_TARGETS:
     Clean('distclean', [
         '.sconsign.dblite', '.sconf_temp', 'config.log',
-        'build', 'package.txt', 'package-description.txt',
+        'build', 'package.txt',
         Glob(name + '*.pkg'),
         ])
