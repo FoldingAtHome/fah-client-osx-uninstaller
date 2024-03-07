@@ -1,4 +1,0 @@
-[submodule "cbang"]
-	path = cbang
-	url = https://github.com/CauldronDevelopmentLLC/cbang.git
-	branch = master
