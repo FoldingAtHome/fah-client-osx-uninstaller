@@ -6,7 +6,8 @@ if sys.platform != 'darwin':
 
 env = Environment(ENV = os.environ)
 try:
-    env.Tool('config', toolpath = [os.environ.get('CBANG_HOME'), './cbang'])
+    paths = [os.environ.get('CBANG_HOME'), os.environ.get('CBANG_CONFIG_HOME')]
+    env.Tool('config', toolpath = paths)
 except Exception as e:
     raise Exception('CBANG_HOME not set?\n' + str(e))
 
