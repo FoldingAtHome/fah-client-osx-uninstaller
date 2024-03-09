@@ -9,17 +9,21 @@ Pre-built packages are available at
 
 ## Building without signing
 
-You will need Xcode from the Apple Mac App Store.
+Build requires
+- macOS 10.15.4 or later
+- Xcode 12.2 or later from the Apple Mac App Store
 
-You will need SCons
+Run commands
 
-    pip3 install scons --user
+```
+python3 -m venv ~/.venv/build-uninstaller
+source ~/.venv/build-uninstaller/bin/activate
+pip3 install --upgrade pip scons
 
-Make sure `scons` is in your `PATH`.
+mkdir -p ~/build && cd ~/build
 
-Then use commands
-
-    git clone https://github.com/FoldingAtHome/fah-client-osx-uninstaller.git
-    cd fah-client-osx-uninstaller
-    git submodule update --init --recursive
-    scons package
+git clone https://github.com/cauldrondevelopmentllc/cbang
+git clone https://github.com/FoldingAtHome/fah-client-osx-uninstaller.git
+export CBANG_HOME="$PWD/cbang"
+scons -C fah-client-osx-uninstaller package
+```
