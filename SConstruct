@@ -14,7 +14,7 @@ except Exception as e:
 env.CBLoadTools('packager')
 conf = env.CBConfigure()
 
-version = '0.1.6'
+version = '0.1.7'
 env.Replace(PACKAGE_VERSION = version)
 
 conf.Finish()
